@@ -1,0 +1,38 @@
+LISTAR:
+curl --location --request GET 'localhost:8085/api/productos' \
+--header 'Content-Type: application/json' \
+--data-raw '{ 
+
+}'
+
+BUSCAR POR ID:
+curl --location --request GET 'localhost:8085/api/productos/9' \
+--header 'Content-Type: application/json' \
+--data-raw '{ 
+
+}'
+
+GUARDAR:
+curl --location --request POST 'localhost:8085/api/productos' \
+--header 'Content-Type: application/json' \
+--data-raw '{ 
+    "nombre": "TRICICLO PERÚ",
+    "precio": 255.89
+}'
+
+MODIFICAR:
+curl --location --request POST 'localhost:8085/api/productos' \
+--header 'Content-Type: application/json' \
+--data-raw '{ 
+    "id": "10",   
+    "nombre": "TRICICLO ALEMÁN",
+    "precio": 255.89
+}'
+
+ELIMINAR:
+curl --location --request PUT 'localhost:8085/api/productos/10' \
+--header 'Content-Type: application/json' \
+--data-raw '{ 
+    
+}'
+
