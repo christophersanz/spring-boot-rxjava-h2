@@ -13,26 +13,25 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "productos")
-//@Document(collection="productos")
+@Table(name = "tasas")
 @Getter @Setter
-public class Producto implements Serializable {
+public class Rate implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public Producto() {	}
+	public Rate(){}
 	
-	public Producto(String nombre, Double precio) {
-		this.nombre = nombre;
-		this.precio = precio;
+	public Rate(String description, Float rate) {
+		this.description = description;
+		this.rate = rate;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	
-	private String nombre;
-	private Double precio;
+	private String description;
+	private Float rate;
 	private Date createAt;
 
 }

@@ -1,6 +1,7 @@
 package com.bolsadeideas.springboot.rxjava.app;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -10,48 +11,66 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.bolsadeideas.springboot.rxjava.app.models.dao.ProductoDao;
-import com.bolsadeideas.springboot.rxjava.app.models.documents.Producto;
+import com.bolsadeideas.springboot.rxjava.app.models.dao.IRateDao;
+import com.bolsadeideas.springboot.rxjava.app.models.dao.IUsuarioDao;
+import com.bolsadeideas.springboot.rxjava.app.models.documents.Rate;
+import com.bolsadeideas.springboot.rxjava.app.models.documents.Role;
+import com.bolsadeideas.springboot.rxjava.app.models.documents.Usuario;
+import com.bolsadeideas.springboot.rxjava.app.util.CalendarUtil;
 
 import io.reactivex.Flowable;
 
 @SpringBootApplication
+@EnableWebSecurity
 public class SpringBootRxjavaApplication implements CommandLineRunner {
 	
 private static final Logger log = LoggerFactory.getLogger(SpringBootRxjavaApplication.class);
-	
-	@Autowired
-	private ProductoDao dao;
-	
-	@Autowired
-//	private ReactiveMongoTemplate mongoTemplate;
 
-	public static void main(String[] args) {
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
+	@Autowired
+	private IUsuarioDao usuarioDao;
+	
+	@Autowired
+	private IRateDao rateDao;
+	
+	public static void main(String[] args) throws Exception {
 		SpringApplication.run(SpringBootRxjavaApplication.class, args);
-		Flowable.just("Hello world").subscribe(System.out::println);
+		Flowable.just("Tasas de Hoy:"+CalendarUtil.getDateOperation()).subscribe(System.out::println);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-//		mongoTemplate.dropCollection("productos").subscribe();
-		List<Producto> lista = new ArrayList<>();
-		lista.add(new Producto("TV Panasonic Pantalla LCD", 456.89));
-		lista.add(new Producto("Sony Camara HD Digital", 177.89));
-		lista.add(new Producto("Apple ipod", 46.89));
-		lista.add(new Producto("Sony Notebook", 846.89));
-		lista.add(new Producto("Hewlett Packard Multifuncional", 200.89));
-		lista.add(new Producto("Bianchi Bicicleta", 70.89));
-		lista.add(new Producto("HP Notebook Omen 17", 2500.89));
-		lista.add(new Producto("Mica Cómoda 5 cajones", 150.89));
-		lista.add(new Producto("TV Sony Bravia OLED 4K Ultra HD", 255.89));
 		
-		Flowable.fromIterable(lista)
-		.map(producto -> {
-			producto.setCreateAt(new Date());
-			return dao.save(producto);
+		//users
+		List<Usuario> usuarios = new ArrayList<>();
+		usuarios.add(new Usuario("admin", "", true, Arrays.asList(new Role("ROLE_USER"), new Role("ROLE_ADMIN"))));
+		usuarios.add(new Usuario("christopher", "", true, Arrays.asList(new Role("ROLE_USER"))));
+		
+		String password = "12345";
+		for(Usuario usuario: usuarios) {
+			String bcryptPassword = passwordEncoder.encode(password);
+			usuario.setPassword(bcryptPassword);
+			usuarioDao.save(usuario);
+			log.info("Insert: " + usuario.getUsername() + " " + usuario.getPassword());
+		}
+		
+		
+		//rates
+		List<Rate> rates = new ArrayList<>();
+		rates.add(new Rate("Dolar", 3.64F));
+		rates.add(new Rate("Euro", 4.41F));
+		
+		Flowable.fromIterable(rates)
+		.map(tasa -> {
+			tasa.setCreateAt(new Date());
+			return rateDao.save(tasa);
         })
-		.subscribe(producto -> log.info("Insert: " + producto.getId() + " " + producto.getNombre()));
+		.subscribe(tasa -> log.info("Insert: " + tasa.getId() + " " + tasa.getDescription()));
 		
 	}
 

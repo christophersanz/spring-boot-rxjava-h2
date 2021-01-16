@@ -8,8 +8,8 @@
 		<version>2.4.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bolsadeideas.springboot.rxjava</groupId>
-	<artifactId>spring-boot-rxjava</artifactId>
+	<groupId>com.bolsadeideas.springboot.rxjava.h2.converter.amount</groupId>
+	<artifactId>spring-boot-rxjava-h2-converter-amount</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-rxjava</name>
 	<description>Demo project for Spring Boot</description>
@@ -19,10 +19,10 @@
 	</properties>
 
 	<dependencies>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-data-mongodb-reactive</artifactId> -->
-<!-- 		</dependency> -->
+		<!-- dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
+		</dependency -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -35,8 +35,41 @@
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		
+		<!-- dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency -->
+		
+		<dependency>
+		  <groupId>io.jmnarloch</groupId>
+		  <artifactId>rxjava-spring-boot-starter</artifactId>
+		  <version>2.0.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>io.reactivex.rxjava2</groupId>
+			<artifactId>rxjava</artifactId>
+			<version>2.2.8</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId> 
+		    <artifactId>spring-boot-starter-validation</artifactId> 
+		</dependency>
+		<dependency>
+		  <groupId>javax.validation</groupId>
+		  <artifactId>validation-api</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -48,21 +81,30 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		
+		<dependency>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-lang3</artifactId>
+		  <version>3.9</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		
 		<dependency>
-		  <groupId>io.jmnarloch</groupId>
-		  <artifactId>rxjava-spring-boot-starter</artifactId>
-		  <version>2.0.0</version>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
+		
 		<dependency>
-			<groupId>io.reactivex.rxjava2</groupId>
-			<artifactId>rxjava</artifactId>
-			<version>2.2.8</version>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>0.9.0</version>
 		</dependency>
+				
+		
 	</dependencies>
 
 	<build>

@@ -1,38 +1,61 @@
-LISTAR:
-curl --location --request GET 'localhost:8085/api/productos' \
---header 'Content-Type: application/json' \
---data-raw '{ 
+Basic Authentication
+generador:https://www.blitter.se/utils/basic-authentication-header-generator/
+decode:https://decodebase64.com/
 
+LOGIN:
+curl --location --request POST 'localhost:9085/api/login' \
+--header 'Content-Type: application/json' \
+--form 'username=admin' \
+--form 'password=12345'
+
+LISTAR TASAS:
+curl --location --request GET 'localhost:9085/api/tasas' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YWRtaW46MTIzNDU=' \
+--data-raw '{ 
+   
 }'
 
-BUSCAR POR ID:
-curl --location --request GET 'localhost:8085/api/productos/9' \
+BUSCAR TASA POR ID:
+curl --location --request GET 'localhost:9085/api/tasas/1' \
 --header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YWRtaW46MTIzNDU=' \
 --data-raw '{ 
-
+   
 }'
 
-GUARDAR:
-curl --location --request POST 'localhost:8085/api/productos' \
+CREAR TASA:
+curl --location --request POST 'localhost:9085/api/tasas' \
 --header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YWRtaW46MTIzNDU=' \
 --data-raw '{ 
-    "nombre": "TRICICLO PERÚ",
-    "precio": 255.89
+   "description": "Sol",
+   "rate": 1.00
 }'
 
-MODIFICAR:
-curl --location --request POST 'localhost:8085/api/productos' \
+MODIFICAR TASA:
+curl --location --request PUT 'localhost:9085/api/tasas/1' \
 --header 'Content-Type: application/json' \
---data-raw '{ 
-    "id": "10",   
-    "nombre": "TRICICLO ALEMÁN",
-    "precio": 255.89
+--header 'Authorization: Bearer YWRtaW46MTIzNDU=' \
+--data-raw '{
+   "rate": 3.86
 }'
 
-ELIMINAR:
-curl --location --request PUT 'localhost:8085/api/productos/10' \
+ELIMINAR TASA:
+curl --location --request DELETE 'localhost:9085/api/tasas/3' \
 --header 'Content-Type: application/json' \
---data-raw '{ 
+--header 'Authorization: Bearer YWRtaW46MTIzNDU=' \
+--data-raw '{
     
+}'
+
+CONVERTIR:
+curl --location --request POST 'localhost:9085/api/tasas/convertir' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YWRtaW46MTIzNDU=' \
+--data-raw '{
+    "amount": "84.00",
+    "currencyFrom": "D",
+    "currencyTo": "S"
 }'
 
